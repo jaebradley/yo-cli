@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='yo-cli',
     description='Yo App Command Line Tool',
-    author="Jae Bradley",
+    author='Jae Bradley',
     author_email='jae.b.bradley@gmail.com',
     url='https://github.com/jaebradley/yo-cli',
     version='0.0.1',
