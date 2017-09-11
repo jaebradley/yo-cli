@@ -11,8 +11,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Click==6.7',
-        'yo-cli==0.1.1',
-        'terminaltables==3.1.0',
+        'YoClient==0.0.1',
         'termcolor==1.1.0'
     ],
     entry_points={
