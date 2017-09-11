@@ -1,5 +1,5 @@
-import os
 import json
+import os
 
 ACCOUNT_DETAILS_FILE_NAME = '.account_details.json'
 

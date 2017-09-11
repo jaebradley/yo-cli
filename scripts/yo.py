@@ -1,9 +1,9 @@
 import click
 import yo_client
 from requests.exceptions import HTTPError
-import emoji
 
 from src.data import get_account_details
+from src.messages import USER_ERROR_MESSAGE, generate_successful_message, generate_unknown_error_message
 
 
 @click.group()
@@ -39,16 +39,11 @@ def send(to, message, link):
             response = client.send_yo(username=to, text=message, link=link)
             recipient = response['recipient']['username']
             yo_id = response['yo_id']
-            print(emoji.emojize(':+1: Sent Yo #{yo_id} to {recipient}! :+1:'.format(yo_id=yo_id, recipient=recipient),
-                                use_aliases=True))
+            print(generate_successful_message(yo_id=yo_id, recipient=recipient))
         except HTTPError:
-            print(emoji.emojize(':frowning: :confused: :anguished: :sweat:  Looks like there was a problem with the recipient, message, or link! :frowning: :confused: :anguished: :sweat:',
-                                use_aliases=True))
+            print(USER_ERROR_MESSAGE)
         except BaseException as e:
-            if hasattr(e, 'message'):
-                print(e.message)
-            else:
-                print(e)
+            print(generate_unknown_error_message(e))
 
 yo.add_command(set_username)
 yo.add_command(set_api_key)
