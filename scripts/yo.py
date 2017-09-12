@@ -3,8 +3,8 @@ import yo_client
 from requests.exceptions import HTTPError
 
 from src.data import get_account_details
-from src.messages import USER_ERROR_MESSAGE, generate_successful_message, generate_unknown_error_message, \
-    API_KEY_NOT_SET_MESSAGE
+from src.messages import USER_ERROR_MESSAGE, generate_successful_sent_yo, generate_unknown_error_message, \
+    API_KEY_NOT_SET_MESSAGE, USERNAME_EXISTS_MESSAGE, USERNAME_DOES_NOT_EXIST_MESSAGE
 
 
 @click.group()
@@ -44,7 +44,24 @@ def send(to, message, link):
         client = yo_client.YoClient(details.api_key)
         try:
             response = client.send_yo(username=to, text=message, link=link)
-            print(generate_successful_message(yo_id=response['yo_id'], recipient=response['recipient']['username']))
+            print(generate_successful_sent_yo(yo_id=response['yo_id'], recipient=response['recipient']['username']))
+        except HTTPError:
+            print(USER_ERROR_MESSAGE)
+        except BaseException as e:
+            print(generate_unknown_error_message(e))
+    else:
+        print(API_KEY_NOT_SET_MESSAGE)
+
+
+@click.command()
+@click.option('--username', type=click.STRING, prompt='Check the existence of which username?')
+def check_username_exists(username):
+    details = get_account_details()
+    if details.api_key:
+        client = yo_client.YoClient(details.api_key)
+        try:
+            response = client.username_exists(username)
+            print(USERNAME_EXISTS_MESSAGE) if response['exists'] else print(USERNAME_DOES_NOT_EXIST_MESSAGE)
         except HTTPError:
             print(USER_ERROR_MESSAGE)
         except BaseException as e:
@@ -55,3 +72,4 @@ def send(to, message, link):
 yo.add_command(set_username)
 yo.add_command(set_api_key)
 yo.add_command(send)
+yo.add_command(check_username_exists)
