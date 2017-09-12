@@ -11,8 +11,9 @@ setup(
     include_package_data=True,
     install_requires=[
         'Click==6.7',
-        'YoClient==0.0.1',
-        'termcolor==1.1.0'
+        'YoClient==0.0.2',
+        'termcolor==1.1.0',
+        'emoji==0.4.5'
     ],
     entry_points={
         'console_scripts': [

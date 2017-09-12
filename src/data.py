@@ -1,5 +1,5 @@
-import os
 import json
+import os
 
 ACCOUNT_DETAILS_FILE_NAME = '.account_details.json'
 
@@ -42,8 +42,8 @@ def update_api_key(value):
 def get_account_details():
     filename = get_account_details_filename()
 
-    if os.path.isfile(filename) and os.path.getsize(filename) == 0:
-        with open(filename, 'wb') as file:
+    if not os.path.isfile(filename) or os.path.getsize(filename) == 0:
+        with open(filename, 'w') as file:
             json.dump({'username': None, 'api_key': None}, file)
 
     with open(filename) as file:
