@@ -1,6 +1,12 @@
 import emoji
 import termcolor
 
+SUCCESSFULLY_UPDATED_API_KEY_MESSAGE = termcolor.colored(emoji.emojize(':+1:  API Key Updated! :+1:', use_aliases=True),
+                                                         'green',
+                                                         attrs=['bold'])
+SUCCESSFULLY_UPDATED_USERNAME_MESSAGE = termcolor.colored(emoji.emojize(':+1:  Username Updated! :+1:', use_aliases=True),
+                                                          'green',
+                                                          attrs=['bold'])
 USERNAME_EXISTS_MESSAGE = termcolor.colored(emoji.emojize(':+1:', use_aliases=True), 'green', attrs=['bold'])
 USERNAME_DOES_NOT_EXIST_MESSAGE = termcolor.colored(emoji.emojize(':thumbsdown:', use_aliases=True), 'red', attrs=['bold'])
 USERNAME_NOT_SET_MESSAGE = termcolor.colored(emoji.emojize(':poop: Your username is not set! :poop:', use_aliases=True), 'red', attrs=['bold'])

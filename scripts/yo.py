@@ -4,7 +4,8 @@ from requests.exceptions import HTTPError
 
 from src.data import get_account_details
 from src.messages import USER_ERROR_MESSAGE, generate_successful_sent_yo, generate_unknown_error_message, \
-    API_KEY_NOT_SET_MESSAGE, USERNAME_EXISTS_MESSAGE, USERNAME_DOES_NOT_EXIST_MESSAGE
+    API_KEY_NOT_SET_MESSAGE, USERNAME_EXISTS_MESSAGE, USERNAME_DOES_NOT_EXIST_MESSAGE, \
+    SUCCESSFULLY_UPDATED_API_KEY_MESSAGE, SUCCESSFULLY_UPDATED_USERNAME_MESSAGE
 
 
 @click.group()
@@ -19,6 +20,7 @@ def set_username(username):
         details = get_account_details()
         details.username = username
         details.update_username()
+        print(SUCCESSFULLY_UPDATED_USERNAME_MESSAGE)
     except BaseException as e:
         print(generate_unknown_error_message(e))
 
@@ -30,6 +32,7 @@ def set_api_key(api_key):
         details = get_account_details()
         details.api_key = api_key
         details.update_api_key()
+        print(SUCCESSFULLY_UPDATED_API_KEY_MESSAGE)
     except BaseException as e:
         print(generate_unknown_error_message(e))
 
