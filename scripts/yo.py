@@ -55,7 +55,7 @@ def send(to, message, link):
 
 @click.command()
 @click.option('--username', type=click.STRING, prompt='Check the existence of which username?')
-def check_username_exists(username):
+def username_exists(username):
     details = get_account_details()
     if details.api_key:
         client = yo_client.YoClient(details.api_key)
@@ -72,4 +72,4 @@ def check_username_exists(username):
 yo.add_command(set_username)
 yo.add_command(set_api_key)
 yo.add_command(send)
-yo.add_command(check_username_exists)
+yo.add_command(username_exists)
