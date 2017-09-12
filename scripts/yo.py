@@ -24,7 +24,7 @@ def set_username(username):
 
 
 @click.command()
-@click.option('--api_key', type=click.STRING, prompt='Your api key, please')
+@click.option('--api_key', type=click.STRING, prompt='Your api key, please', hide_input=True)
 def set_api_key(api_key):
     try:
         details = get_account_details()
