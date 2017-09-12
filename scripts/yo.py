@@ -3,7 +3,8 @@ import yo_client
 from requests.exceptions import HTTPError
 
 from src.data import get_account_details
-from src.messages import USER_ERROR_MESSAGE, generate_successful_message, generate_unknown_error_message
+from src.messages import USER_ERROR_MESSAGE, generate_successful_message, generate_unknown_error_message, \
+    API_KEY_NOT_SET_MESSAGE
 
 
 @click.group()
@@ -14,17 +15,23 @@ def yo():
 @click.command()
 @click.option('--username', type=click.STRING, prompt='Your username, please')
 def set_username(username):
-    details = get_account_details()
-    details.username = username
-    details.update_username()
+    try:
+        details = get_account_details()
+        details.username = username
+        details.update_username()
+    except BaseException as e:
+        print(generate_unknown_error_message(e))
 
 
 @click.command()
 @click.option('--api_key', type=click.STRING, prompt='Your api key, please')
 def set_api_key(api_key):
-    details = get_account_details()
-    details.api_key = api_key
-    details.update_api_key()
+    try:
+        details = get_account_details()
+        details.api_key = api_key
+        details.update_api_key()
+    except BaseException as e:
+        print(generate_unknown_error_message(e))
 
 
 @click.command()
@@ -37,13 +44,13 @@ def send(to, message, link):
         client = yo_client.YoClient(details.api_key)
         try:
             response = client.send_yo(username=to, text=message, link=link)
-            recipient = response['recipient']['username']
-            yo_id = response['yo_id']
-            print(generate_successful_message(yo_id=yo_id, recipient=recipient))
+            print(generate_successful_message(yo_id=response['yo_id'], recipient=response['recipient']['username']))
         except HTTPError:
             print(USER_ERROR_MESSAGE)
         except BaseException as e:
             print(generate_unknown_error_message(e))
+    else:
+        print(API_KEY_NOT_SET_MESSAGE)
 
 yo.add_command(set_username)
 yo.add_command(set_api_key)
